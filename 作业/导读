@@ -1,0 +1,43 @@
+module Stack 首先封装了一个stack的模块方便在主程序中引入
+	$top=0  这是一个栈顶的指针使用一全局变量最合适不过
+	$out="" 这是出站的结果当然其实在这里已经用不到了
+		def self.length 这个站的长度
+			return $stack.length
+		end
+		def self.createstack length  创建一个站，就是创建一个数组
+		    $stack=Array.new(length) 
+		    $base=$stack.length    这是一个栈底指针
+		end
+		def self.push data  出站方法
+			puts "erro,you must creat stack." if $stack.length==0 如果没有建立过栈那么就报错
+			$stack[$base-$top]=data 将这个栈倒过来赋值
+			$top+=1 指针加一
+			puts "erro,stack full." if $top>$stack.length 如果栈满了，就报错
+			$stack.each do  |element| 这是表示进栈过程的方法
+				puts  "_|___"+element.to_s+"___|_"
+			end
+			puts "\n"
+		end
+		def self.out 出站
+			if $stack.length==0 如果没有建过栈报错
+			 	puts "no stack"
+			else 
+				$stack.each do  |e| 出站，当然你可以用一变量累加起来
+					print e
+				end
+			end
+		end
+end
+很好，保存为Stack.rb
+require_relative "Stack" 引入刚才的模块
+	include Stack
+Stack.createstack 10 建立栈最大值10
+print "Now,put your num by 10h:"
+$num_10=gets().to_i 输入转字符
+	until $num_10==0 do
+		data=$num_10%8 取余数
+		Stack.push data 入栈
+		$num_10=$num_10/8 取商，每次都进行赋值直到商是0
+	end 
+print "result be:" 打印结果
+Stack.out
